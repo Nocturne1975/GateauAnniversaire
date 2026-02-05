@@ -8,6 +8,6 @@ public class VanillaCake implements Cake {
 
     @Override
     public double getPrice() {
-        return 10.0;
+        return 15.0;
     }
 }
