@@ -1,52 +1,64 @@
-# Exercice — Patron Decorator (Gâteau d'anniversaire)
+# Exercice — 🎂 Le gâteau d’anniversaire maudit (Java)
 
 ## Contexte
-On veut modéliser un gâteau de base (vanille) auquel on peut ajouter des options :
-- bougies (+2 $)
-- glaçage (+3 $)
-- fruits (+4 $)
-- chocolat (+5 $)
+Vous avez un projet Java qui modélise un gâteau vanille (15 $) et des décorations :
+- **Bougies** : +2 $
+- **Glaçage** : +3 $
+- **Fruits** : +4 $
+- **Chocolat** : +5 $
 
-Le système doit produire :
-- une **description** (ex. "Gâteau vanille, glaçage, fruits")
-- un **prix total** (ex. 15 + 3 + 4 = 22 $)
+Le code actuel est basé sur l’héritage et crée une classe pour chaque combinaison (`GateauVanilleAvecBougiesEt...`).
 
-## Partie A — Sans Decorator (avant)
-Fichier : `code/avant/index.js`
+Votre mission : **refactorer avec le patron Decorator** pour pouvoir composer librement les décorations.
 
-1) Lis le code existant (héritage).
-2) Ajoute une nouvelle option : **Paillettes** (+1 $).
-   - Fais-le “à l’ancienne” avec une sous-classe (ex. `GateauVanillePaillettes`).
-3) Ajoute ensuite une combinaison : **Bougies + Glaçage + Paillettes**.
-   - Question : combien de classes dois-tu créer si on veut toutes les combinaisons possibles ?
+## Partie A — Observer le problème (avant)
+Dossier : `GateauExercice/src/main/java/Gateau_Exercice/`
+
+1) Ouvrez `Main.java` et constatez qu’il instancie beaucoup de classes différentes.
+2) Regardez quelques classes comme :
+   - `GateauVanilleAvecBougies`
+   - `GateauVanilleAvecGlacageEtFruits`
+   - `GateauVanilleAvecBougiesEtGlacageEtFruitsEtChocolat`
+3) Expliquez en 2–3 phrases pourquoi cette approche ne scale pas (explosion combinatoire).
 
 ✅ À remettre (Partie A)
-- Ta/tes nouvelles classes.
-- Une courte phrase qui explique le problème (explosion combinatoire).
+- Une explication claire du problème.
 
-## Partie B — Avec Decorator (après)
-Fichier : `code/apres/index.js`
+## Partie B — Refactorer avec Decorator (après)
+Dans le même package `Gateau_Exercice`, vous devez créer :
 
-1) Ajoute un décorateur concret **Paillettes** (+1 $) qui étend `DecorateurGateau`.
-2) Crée au moins 2 gâteaux différents par composition, par exemple :
-   - Vanille + Glaçage + Fruits
-   - Vanille + Paillettes + Bougies + Chocolat
-3) Affiche pour chacun :
-   - `getDescription()`
-   - `getPrix()`
+1) Une interface `Gateau`
+   - `String getDescription()`
+   - `double getPrix()`
+2) `GateauVanille` (gâteau de base) qui implémente `Gateau`
+3) `GateauDecorator` (classe abstraite) qui implémente `Gateau` et enveloppe un `Gateau`
+4) Les décorateurs concrets : `Bougies`, `Glacage`, `Fruits`, `Chocolat`
+5) Modifier `Main.java` pour composer librement, par exemple :
 
-Note : le fichier `code/apres/index.js` est un **starter** avec des `TODO`. Tant que `Paillettes` n'est pas implémenté, l'utiliser dans une composition va lever une erreur (c'est normal).
+```java
+Gateau g = new Fruits(new Bougies(new Glacage(new GateauVanille())));
+System.out.println(g.getDescription() + " : " + g.getPrix() + " $");
+```
+
+✅ Résultat attendu (exemple)
+- Description : Gâteau vanille + Glaçage + Bougies + Fruits
+- Coût total : 24 $
 
 ✅ À remettre (Partie B)
-- Le décorateur `Paillettes`.
-- 2 compositions différentes + sorties console.
+- Vos nouvelles classes décorateurs.
+- `Main.java` mis à jour avec au moins 2 compositions différentes.
 
-## Questions (à répondre en 3–5 lignes chacune)
+## Questions (3–5 lignes chacune)
 1) Pourquoi l’héritage devient-il un problème ici ?
-2) En quoi Decorator respecte mieux le principe Open/Closed ?
-3) Quelle est la différence entre **héritage** et **composition** dans cet exemple ?
+2) En quoi Decorator respecte mieux Open/Closed ?
+3) Héritage vs composition dans cet exemple ?
 
-## Exécution
-Pré-requis : Node.js
-- Avant : `node code/avant/index.js`
-- Après : `node code/apres/index.js`
+## Exécution (sans Maven)
+Depuis la racine du dépôt :
+
+```bash
+cd GateauExercice
+mkdir -p target/classes
+javac -d target/classes src/main/java/Gateau_Exercice/*.java
+java -cp target/classes Gateau_Exercice.Main
+```

@@ -1,54 +1,81 @@
-# Après — Patron Decorator (solution)
+# Après — Patron Decorator (Java)
 
 ## Idée
-Au lieu de multiplier les sous-classes, on crée :
-- un **composant** (`Gateau`)
-- un **décorateur abstrait** (`DecorateurGateau`) qui enveloppe un `Gateau`
-- des **décorateurs concrets** (`Bougies`, `Glacage`, `Fruits`, `Chocolat`)
+Au lieu d’avoir une classe par combinaison, on crée :
+- un **composant** : `Gateau`
+- un **composant concret** : `GateauVanille`
+- un **décorateur abstrait** : `GateauDecorator` qui *enveloppe* un `Gateau`
+- des **décorateurs concrets** : `Bougies`, `Glacage`, `Fruits`, `Chocolat`
 
 Chaque décorateur :
-- délègue au gâteau qu’il enveloppe
-- ajoute sa propre description/prix
+- délègue à l’objet “enveloppé”
+- ajoute *sa* partie de description et *son* coût
 
 ## Avantages
-- on combine dynamiquement : `new Chocolat(new Fruits(new Glacage(new GateauVanille())))`
-- pas d’explosion de classes
-- respecte l’Open/Closed : on ajoute des décorateurs sans modifier les classes existantes
+- Composition dynamique : on combine à l’exécution
+- Plus d’explosion combinatoire
+- Open/Closed : ajouter `Paillettes` = créer une nouvelle classe décorateur, sans modifier le reste
 
-## Exemple (JS)
+## Exemple (Java)
 
-```js
-class Gateau {
-  getDescription() { return "Gâteau"; }
-  getPrix() { return 0; }
-}
+### 1) Composant (interface)
+```java
+package Gateau_Exercice;
 
-class GateauVanille extends Gateau {
-  getDescription() { return "Gâteau vanille"; }
-  getPrix() { return 15; }
-}
-
-class DecorateurGateau extends Gateau {
-  constructor(gateau) {
-    super();
-    this.gateau = gateau;
-  }
-  getDescription() { return this.gateau.getDescription(); }
-  getPrix() { return this.gateau.getPrix(); }
-}
-
-class Glacage extends DecorateurGateau {
-  getDescription() { return super.getDescription() + ", glaçage"; }
-  getPrix() { return super.getPrix() + 3; }
-}
-
-class Fruits extends DecorateurGateau {
-  getDescription() { return super.getDescription() + ", fruits"; }
-  getPrix() { return super.getPrix() + 4; }
-}
-
-class Chocolat extends DecorateurGateau {
-  getDescription() { return super.getDescription() + ", chocolat"; }
-  getPrix() { return super.getPrix() + 5; }
+public interface Gateau {
+    String getDescription();
+    double getPrix();
 }
 ```
+
+### 2) Décorateur abstrait
+```java
+package Gateau_Exercice;
+
+public abstract class GateauDecorator implements Gateau {
+    protected final Gateau gateau;
+
+    protected GateauDecorator(Gateau gateau) {
+        this.gateau = gateau;
+    }
+
+    @Override
+    public String getDescription() {
+        return gateau.getDescription();
+    }
+
+    @Override
+    public double getPrix() {
+        return gateau.getPrix();
+    }
+}
+```
+
+### 3) Décorateur concret (ex. Bougies)
+```java
+package Gateau_Exercice;
+
+public class Bougies extends GateauDecorator {
+    public Bougies(Gateau gateau) {
+        super(gateau);
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + " + Bougies";
+    }
+
+    @Override
+    public double getPrix() {
+        return super.getPrix() + 2.0;
+    }
+}
+```
+
+### 4) Composition
+```java
+Gateau g = new Fruits(new Bougies(new Glacage(new GateauVanille())));
+System.out.println(g.getDescription() + " : " + g.getPrix() + " $");
+```
+
+Note : le **prix** ne dépend pas de l’ordre, mais la **description** suit l’ordre d’enveloppement.

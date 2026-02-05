@@ -8,124 +8,120 @@
 //   javac code/java/apres/ApresDecorator.java
 //   java -cp code/java/apres ApresDecorator
 
-abstract class Gateau {
-    String getDescription() {
-        return "Gâteau";
-    }
+interface Gateau {
+    String getDescription();
 
-    int getPrix() {
-        return 0;
-    }
+    int getPrix();
 }
 
-class GateauVanille extends Gateau {
+class GateauVanille implements Gateau {
     @Override
-    String getDescription() {
+    public String getDescription() {
         return "Gâteau vanille";
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return 15;
     }
 }
 
-abstract class DecorateurGateau extends Gateau {
+abstract class GateauDecorator implements Gateau {
     protected final Gateau gateau;
 
-    protected DecorateurGateau(Gateau gateau) {
+    protected GateauDecorator(Gateau gateau) {
         this.gateau = gateau;
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return gateau.getDescription();
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return gateau.getPrix();
     }
 }
 
-class Bougies extends DecorateurGateau {
+class Bougies extends GateauDecorator {
     Bougies(Gateau gateau) {
         super(gateau);
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return super.getDescription() + ", bougies";
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return super.getPrix() + 2;
     }
 }
 
-class Glacage extends DecorateurGateau {
+class Glacage extends GateauDecorator {
     Glacage(Gateau gateau) {
         super(gateau);
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return super.getDescription() + ", glaçage";
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return super.getPrix() + 3;
     }
 }
 
-class Fruits extends DecorateurGateau {
+class Fruits extends GateauDecorator {
     Fruits(Gateau gateau) {
         super(gateau);
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return super.getDescription() + ", fruits";
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return super.getPrix() + 4;
     }
 }
 
-class Chocolat extends DecorateurGateau {
+class Chocolat extends GateauDecorator {
     Chocolat(Gateau gateau) {
         super(gateau);
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         return super.getDescription() + ", chocolat";
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         return super.getPrix() + 5;
     }
 }
 
 // TODO (exercice) : décorateur concret Paillettes (+1$)
-class Paillettes extends DecorateurGateau {
+class Paillettes extends GateauDecorator {
     Paillettes(Gateau gateau) {
         super(gateau);
     }
 
     @Override
-    String getDescription() {
+    public String getDescription() {
         throw new UnsupportedOperationException(
                 "TODO: Implémenter Paillettes.getDescription() (ajouter ', paillettes')");
     }
 
     @Override
-    int getPrix() {
+    public int getPrix() {
         throw new UnsupportedOperationException("TODO: Implémenter Paillettes.getPrix() (ajouter +1)");
     }
 }

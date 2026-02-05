@@ -1,55 +1,48 @@
-# Avant le Decorator — Héritage (problème)
+# Avant — Explosion de classes (Java)
 
-## Idée
-On crée une classe de base (ex. `GateauVanille`), puis on crée des sous-classes pour chaque ajout (`Bougies`, `Glacage`, etc.).
+## Idée (héritage / variantes)
+On part d’un gâteau de base, puis on crée des classes :
+- 1 décoration : `GateauVanilleAvecBougies`, `GateauVanilleAvecGlacage`, etc.
+- 2 décorations : `GateauVanilleAvecBougiesEtGlacage`, etc.
+- 3 décorations : …
 
 ## Problème
-Dès qu’on veut permettre plusieurs ajouts en même temps, on se retrouve à créer **une classe par combinaison** :
-- `GateauVanilleBougiesGlacage`
-- `GateauVanilleChocolatFruits`
-- `GateauVanilleBougiesFruitsChocolat`
+Chaque combinaison devient une **nouvelle classe**.
+Avec $n$ décorations possibles, on a jusqu’à $2^n$ combinaisons → le nombre de classes explose.
+
+Dans ton projet, ça se voit directement dans `GateauExercice/src/main/java/Gateau_Exercice/` :
+- `GateauVanilleAvecBougies`
+- `GateauVanilleAvecGlacage`
+- `GateauVanilleAvecBougiesEtGlacage`
+- `GateauVanilleAvecBougiesEtGlacageEtFruitsEtChocolat`
 - etc.
 
-Résultat : **explosion combinatoire** et code difficile à maintenir.
+## Exemple (Java)
 
-## Exemple (JS)
+Un extrait typique “une classe par combinaison” :
 
-```js
-class GateauVanille {
-  getDescription() {
-    return "Gâteau vanille";
-  }
+```java
+package Gateau_Exercice;
 
-  getPrix() {
-    return 15;
-  }
-}
+public class GateauVanilleAvecBougiesEtGlacage extends Gateau {
+    @Override
+    public String getDescription() {
+        return "Gâteau vanille + Bougies + Glaçage";
+    }
 
-class GateauVanilleBougies extends GateauVanille {
-  getDescription() {
-    return super.getDescription() + ", bougies";
-  }
-  getPrix() {
-    return super.getPrix() + 2;
-  }
-}
-
-class GateauVanilleGlacage extends GateauVanille {
-  getDescription() {
-    return super.getDescription() + ", glaçage";
-  }
-  getPrix() {
-    return super.getPrix() + 3;
-  }
-}
-
-// Combinaison obligatoire (une classe de plus…)
-class GateauVanilleBougiesGlacage extends GateauVanille {
-  getDescription() {
-    return super.getDescription() + ", bougies, glaçage";
-  }
-  getPrix() {
-    return super.getPrix() + 2 + 3;
-  }
+    @Override
+    public double getPrix() {
+        return 15.0 + 2.0 + 3.0;
+    }
 }
 ```
+
+Et `Main.java` doit ensuite instancier plein de classes différentes :
+
+```java
+Gateau g2 = new GateauVanilleAvecBougies();
+Gateau g6 = new GateauVanilleAvecBougiesEtFruits();
+Gateau g12 = new GateauVanilleAvecBougiesEtGlacageEtFruitsEtChocolat();
+```
+
+➡️ Message clé : **on veut pouvoir combiner les décorations sans créer une classe par combinaison**.
