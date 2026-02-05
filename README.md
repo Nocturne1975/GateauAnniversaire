@@ -1,34 +1,7 @@
 # Présentation — Patron Decorator (Gâteau d'anniversaire)
 
-Ce dépôt contient deux versions du même problème :
-- **Avant** : solution par héritage → explosion combinatoire des classes.
-- **Après** : solution avec le **patron Decorator** → composition flexible.
-
-## Contenu
-
-- Documents “présentation” :
-  - `slides/01-avant.md`
-  - `slides/02-apres.md`
-  - `slides/03-exercice.md`
-  - `slides/04-correction.md`
-
-- Code Java (Decorator) :
-  - `GateauExercice/src/main/java/Gateau_Exercice`
-
-## Exécuter les exemples (Java)
-
 **Pré-requis :** JDK installé.
 
-Depuis la racine du dépôt :
-
-```bash
-cd GateauExercice
-mkdir -p target/classes
-javac -d target/classes src/main/java/Gateau_Exercice/*.java
-java -cp target/classes Gateau_Exercice.Main
-```
-
-Vous verrez toutes les combinaisons de décorateurs avec leurs prix.
 
 ## Message clé
 
@@ -72,6 +45,7 @@ Votre code ressemble à ça :
 - GateauVanilleAvecBougiesEtChocolat
 - GateauVanilleAvecGlacageEtFruits
 - GateauVanilleAvecBougiesEtGlacageEtFruitsEtChocolatEtUneCriseDeNerfs
+- ...
 
 Bref :
 Vous avez inventé le patron “ExplosionDeClasses”.
@@ -97,7 +71,7 @@ Gateau g = new Fruits(new Bougies(new Glacage(new GateauVanille())));
 
 ### 🧾 Résultat attendu
 Description : Gâteau vanille + Glaçage + Bougies + Fruits  
-Coût total : 24 $
+Coût total : 24 $ Et votre ami sera tout content!!!
 
 Si votre gâteau coûte 87 $, vous avez probablement décoré votre IDE aussi.
 
