@@ -50,14 +50,16 @@ Simple. Pur. Innocent.
 Pas encore traumatisé par vos décorations.
 
 ### ✨ Les décorations (a.k.a. les ennuis)
-Chaque décoration ajoute un coût :
 
-| Décoration | Prix | Commentaire |
-|---|---:|---|
-| Bougies | +2 $ | Obligatoires si vous aimez le feu |
-| Glaçage | +3 $ | Pour cacher les fissures émotionnelles du gâteau |
-| Fruits | +4 $ | Pour donner l’illusion que c’est santé |
-| Chocolat | +5 $ | Pour les vrais gourmands |
+Chaque décoration ajoute un coût :
+________________________________________________________________________
+| Décoration | Prix | Commentaire                                      |
+|============|======|==================================================|
+| Bougies    | +2 $ | Obligatoires si vous aimez le feu                |
+| Glaçage    | +3 $ | Pour cacher les fissures émotionnelles du gâteau |
+| Fruits     | +4 $ | Pour donner l’illusion que c’est santé           |
+| Chocolat   | +5 $ | Pour les vrais gourmands                         |
+________________________________________________________________________
 
 ---
 
@@ -104,7 +106,7 @@ Vous devez :
 **Coût total :** 24 $
 
 Si votre gâteau coûte 87 $, vous avez probablement décoré votre IDE aussi.
-
+Et votre ami sera trrrès impressionné. Et heureux.
 ---
 
 ## 💡 Questions existentielles (optionnel)
