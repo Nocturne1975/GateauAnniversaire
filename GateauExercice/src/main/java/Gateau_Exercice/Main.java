@@ -1,26 +1,26 @@
 package Gateau_Exercice;
 
+import java.util.Locale;
+
 public class Main {
     public static void main(String[] args) {
-        Gateau g1 = new GateauVanille();
-        Gateau g2 = new GateauVanilleAvecBougies();
-        Gateau g3 = new GateauVanilleAvecFruits();
-        Gateau g4 = new GateauVanilleAvecChocolat();
-        Gateau g5 = new GateauVanilleAvecGlacage();
+        Locale.setDefault(Locale.US); // pour le point décimal
 
-        Gateau g6 = new GateauVanilleAvecBougiesEtFruits();
-        Gateau g7 = new GateauVanilleAvecBougiesEtChocolat();
-        Gateau g8 = new GateauVanilleAvecBougiesEtGlacage();
-        Gateau g9 = new GateauVanilleAvecFruitsEtChocolat();
-        Gateau g10 = new GateauVanilleAvecGlacageEtFruits();
-        Gateau g11 = new GateauVanilleAvecGlacageEtChocolat();
+        for (int mask = 0; mask < 16; mask++) {
+            Cake cake = new VanillaCake();
 
-        Gateau g12 = new GateauVanilleAvecBougiesEtGlacageEtFruitsEtChocolat();
+            if ((mask & 1) != 0) cake = new CandlesDecorator(cake);
+            if ((mask & 2) != 0) cake = new IcingDecorator(cake);
+            if ((mask & 4) != 0) cake = new FruitsDecorator(cake);
+            if ((mask & 8) != 0) cake = new ChocolateDecorator(cake);
 
-        Gateau[] gateaux = { g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12 };
-
-        for (Gateau g : gateaux) {
-            System.out.println(g.getDescription() + " : " + g.getPrix() + " $");
+            printCake(cake);
         }
+    }
+
+    private static void printCake(Cake cake) {
+        String desc = String.format("%-50s", cake.getDescription());
+        String price = String.format("%.2f $", cake.getPrice());
+        System.out.println(desc + " : " + price);
     }
 }

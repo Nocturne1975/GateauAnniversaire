@@ -79,3 +79,8 @@ Si votre gâteau coûte 87 $, vous avez probablement décoré votre IDE aussi.
 - Pourquoi hériter quand on peut décorer ?
 - Si j’ajoute les décorateurs dans un autre ordre, est-ce que le gâteau explose ?
 - Comment ajouter “Paillettes” sans réécrire 12 classes ?
+
+
+## Correction
+
+La Solution sera disponible apres ce cours.
