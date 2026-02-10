@@ -1,0 +1,10 @@
+# Java
+*.class
+
+# Node
+node_modules/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
