@@ -36,7 +36,7 @@ Il est temps d’arrêter le carnage.
 2. Lancez le projet Java  
    ```bash
    mvn clean package
-   java -jar target/patrons-agence-voyages-1.0-SNAPSHOT.jar
+   java -jar target/GateauExercice-1.0-SNAPSHOT
    ```
    ou directement à partir de votre IDE.
 
